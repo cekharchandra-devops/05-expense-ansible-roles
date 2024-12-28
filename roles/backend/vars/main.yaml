@@ -1,2 +1,2 @@
-mysql_db_host: mysql.devsecmlops.online
+mysql_db_host: "mysql.devsecmlops.online"
 mysql_root_password: ExpenseApp@1
