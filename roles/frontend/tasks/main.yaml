@@ -8,6 +8,11 @@
     path: /usr/share/nginx/html
     state: absent
 
+- name: remove nginx default page
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: directory
+
 - name: download source code and unarchive
   ansible.builtin.unarchive:
     src:  https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
