@@ -1,0 +1,32 @@
+- name: install pymysql
+  ansible.builtin.pip:
+    name: 
+      - PYMYSQL
+    executable: pip3.9
+
+- name: install mysql server
+  ansible.builtin.dnf:
+    name: mysql-server
+    state: present
+
+- name: start mysqld service
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: mysql db status info
+  community.mysql.mysql_info:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    login_host: " {{ mysql_login_host }}"
+  ignore_errors: true
+  register: db_instance_info
+
+- name: print db_instance_info 
+  ansible.builtin.debug:
+    msg: "{{ db_instance_info }}"
+
+- name: set root password only if db_instance_info failed is true
+  ansible.builtin.command: "mysql_secure_installation --set-root-pass {{ mysql_root_password }}"
+  when: db_instance_info.failed is true

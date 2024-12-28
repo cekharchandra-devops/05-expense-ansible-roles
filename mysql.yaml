@@ -1,0 +1,5 @@
+- name: define mysql role
+  hosts: mysql
+  become: yes
+  roles:
+    - mysql
